@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Psychic Game</title>
 </head>
+
 <body>
     <div id="psychicBlock">
+        <!--html labeling that will be referenced -->
         <h1>Guessing Game</h1>
         <h3>Wins:
             <p id="wins"></p>
@@ -23,56 +26,74 @@
 
     </div>
     <script>
+        //simple array of the alphabet mimicing all the 
+        //"normal" choices the computer will make
         var computerChoices = ["a", "b", "c", "d", "e", "f", "g",
-      "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t",
-      "u", "v", "w", "x", "y", "z"];
-      var wins = 0;
-      var loses = 0;
-      var guessesRemain, guessedLetters, letterToGuess;
+            "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t",
+            "u", "v", "w", "x", "y", "z"];
+        //variables for the wins, losses, and guesses
+        var wins = 0;
+        var loses = 0;
+        var guessesRemain, guessedLetters, letterToGuess;
+        //globally calls the resetGame and display functions
+        resetGame();
+        display();
+        //function calling on user input and what functions 
+        //would be called based on what keys were pressed correctly
+        document.onkeyup = function (event) {
+            var guess = event.key;
+            if (guess === letterToGuess) {
+                win();
+            } else if (guessesRemain - 1 === 0) {
+                lost();
+            } else {
+                fail(guess);
+            }
+            //after any input
+            display();
+        }
 
-      resetGame();
-      display();
+        function display() {
+            var winsOne = document.getElementById("wins");
+            var losesOne = document.getElementById("loses");
+            var guessRemain = document.getElementById("guessRemain");
+            var letterGuessed = document.getElementById("guessed");
+            winsOne.innerHTML = wins;
+            losesOne.innerHTML = loses;
+            guessesRemain.innerHTML = guessesRemain;
+            letterGuessed.innerHTML = guessedLetters.join(',');
+        }
 
-      document.onkeyup = function(event) {
-          var guess = event.key;
-          if(guess === letterToGuess){
-              win();
-          } else if (guessesLeft - 1 === 0) {
-              lost();
-          } else {
-              fail(guess);
-          }
+        function win() {
+            wins++;
+            resetGame();
+        }
 
-          display();
-      }
+        function lost() {
+            loses++;
+            resetGame();
 
-      function display() {
-          var winsOne = document.getElementById("wins");
-          var losesOne = document.getElementById("loses");
-          var guessRemain = document.getElementById("guessRemain");
-          var letterGuessed = document.getElementById("guessed");
-          winsOne.innerHTML = wins;
-          losesOne.innerHTML = loses;
-          guessRemain.innerHTML = guessesRemain;
-          letterGuessed.innerHTML = guessedLetters.join(',');
-      }
+        }
 
-      function win() {
-          wins++;
-          resetGame();
-      }
+        function fail(letter) {
+            guessesRemain--;
+            guessedLetters.push(computerChoices);
+        }
 
-      function lost() {
-          loses++;
-          resetGame();
-          
-      }
-    
-    
-    
+        function resetGame() {
+            guessesRemain = 10;
+            guessedLetters = [];
+            letterToGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+            console.log("Letter to guess: " + letterToGuess);
+
+        }
+
+
+
     </script>
 
 
 
 </body>
+
 </html>
