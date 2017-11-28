@@ -49,10 +49,11 @@
             } else {
                 fail(guess);
             }
-            //after any input
+            //after any input is made, the display function calls all
+            //associated elementById
             display();
         }
-
+        //function that calls the developed variables that collects based on user input
         function display() {
             var winsOne = document.getElementById("wins");
             var losesOne = document.getElementById("loses");
@@ -63,7 +64,8 @@
             guessesRemain.innerHTML = guessesRemain;
             letterGuessed.innerHTML = guessedLetters.join(',');
         }
-
+        //both the win and loss functions call on their respective results
+        //both call on the the resetGame() function
         function win() {
             wins++;
             resetGame();
@@ -74,12 +76,15 @@
             resetGame();
 
         }
-
+        //the array push method is new to me this is purelly experimental
+        //from what i can tell, failure to pick the right key will prompt
+        //the entire Choices array, the alphabet, as a hint
         function fail(letter) {
             guessesRemain--;
             guessedLetters.push(computerChoices);
         }
-
+        //this function is what initiates the computer's random choice from the array
+        //for helpful purposes, i added a console log of the actual choices to make testing easier
         function resetGame() {
             guessesRemain = 10;
             guessedLetters = [];
