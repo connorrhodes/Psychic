@@ -44,11 +44,11 @@
             var guess = event.key;
             if (guess === letterToGuess) {
                 win();
-            } else if (guessesRemain - 1 === 0) {
+            } else { //guessesRemain - 1 === 0
                 lost();
-            } else {
-                fail(guess);
-            }
+             } //else {
+            //     fail(guess);
+            // }
             //after any input is made, the display function calls all
             //associated elementById
             display();
@@ -81,7 +81,7 @@
         //the entire Choices array, the alphabet, as a hint
         function fail(letter) {
             guessesRemain--;
-            guessedLetters.push(computerChoices);
+            //guessedLetters.push(computerChoices);
         }
         //this function is what initiates the computer's random choice from the array
         //for helpful purposes, i added a console log of the actual choices to make testing easier
